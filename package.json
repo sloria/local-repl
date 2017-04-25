@@ -1,0 +1,30 @@
+{
+  "name": "prepl",
+  "version": "0.1.0",
+  "bin": {
+    "prepl": "index.js"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "description": "Project-specific REPL configuration for Node.js",
+  "main": "index.js",
+  "author": "Steven Loria",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "read-pkg": "^2.0.0",
+    "req-cwd": "^1.0.1"
+  },
+  "repl": {
+    "context": [
+      { "name": "_", "module": "lodash" },
+      { "name": "foo", "value": 42 }
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-import": "^2.2.0"
+  }
+}
