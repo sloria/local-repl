@@ -6,6 +6,7 @@
   },
   "scripts": {
     "lint": "eslint .",
+    "repl": "node cli.js",
     "test": "lab"
   },
   "description": "Project-specific REPL configuration for Node.js",
@@ -13,16 +14,21 @@
   "author": "Steven Loria",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^1.1.3",
     "lodash": "^4.17.4",
     "read-pkg": "^2.0.0",
     "req-cwd": "^1.0.1"
   },
-  "repl": {
-    "context": [
-      { "name": "l", "module": "lodash" },
-      { "name": "prepl", "module": "./" }
-    ]
-  },
+  "repl": [
+    {
+      "name": "l",
+      "module": "lodash"
+    },
+    {
+      "name": "prepl",
+      "module": "./"
+    }
+  ],
   "devDependencies": {
     "code": "^4.0.0",
     "eslint": "^3.19.0",

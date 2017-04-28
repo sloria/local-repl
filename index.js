@@ -5,6 +5,7 @@ const repl = require('repl');
 const _ = require('lodash');
 const readPkg = require('read-pkg');
 const reqCwd = require('req-cwd');
+const chalk = require('chalk');
 
 const pkg = readPkg.sync(path.join(__dirname, 'package.json'));
 const VERSION = exports.VERSION = pkg.version;
@@ -18,9 +19,10 @@ const getDefaultPrompt = exports.getDefaultPrompt = (projectName) => {
   return `[${name}] > `;
 };
 
-function printBanner(context) {
-  console.log(`Node ${process.version}`);
-  console.log(`prepl v${VERSION}`);
+function printBanner(context, localPkg) {
+  console.log(chalk.gray(`Node ${process.version}`));
+  console.log(chalk.gray(`prepl ${VERSION}`));
+  console.log(chalk.bold(`${localPkg.name} ${localPkg.version}`));
   console.log('Context: ', _.keys(context).sort().join(', '));
 }
 
@@ -72,9 +74,14 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
   );
 
   const prompt = options.prompt || replrc.prompt || _.get(localPkg, 'repl.prompt') || getDefaultPrompt(localPkg.name);
+
+  const banner = replrc.banner || _.get(localPkg, 'repl.banner') || printBanner;
+  const bannerFunc = _.isString(banner) ? () => console.log(banner) : banner;
   return {
     context,
     prompt,
+    package: localPkg,
+    bannerFunc,
   };
 };
 
@@ -91,8 +98,7 @@ exports.start = (options) => {
   const config = loadConfiguration(opts);
   const context = config.context;
   const prompt = config.prompt;
-  // TODO: Make configurable
-  printBanner(context);
+  config.bannerFunc(context, config.package);
 
   const replOpts = _.assign({}, opts, { prompt });
   const replInstance = repl.start(replOpts);

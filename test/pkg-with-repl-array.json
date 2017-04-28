@@ -1,5 +1,5 @@
 {
-  "name": "foo2",
+  "name": "foo",
   "version": "2.0.0",
   "repl": [
     {"name": "bar", "value": 42},

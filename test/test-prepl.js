@@ -62,6 +62,7 @@ describe('loadConfiguration', () => {
     });
     expect(result.context).to.equal({ bar: 42 });
     expect(result.prompt).to.equal('<TEST> $');
+    expect(result.bannerFunc).to.be.a.function();
     done();
   });
 
@@ -72,6 +73,7 @@ describe('loadConfiguration', () => {
     });
     expect(result.context.bar).to.equal(42);
     expect(result.context.lodash).to.be.a.function();
+    expect(result.prompt).to.equal('[foo] > ');
     done();
   });
 
@@ -103,6 +105,8 @@ describe('loadConfiguration', () => {
       replrc: path.join(__dirname, 'replrc.js'),
     });
     expect(result.context.bar).to.equal(43);
+    const banner = result.bannerFunc();
+    expect(banner).to.equal('TEST');
     done();
   });
 });

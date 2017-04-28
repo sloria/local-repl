@@ -3,5 +3,6 @@ module.exports = {
     { name: 'bar', value: 43 },
     'lodash',
   ],
-  prompt: '[TEST] $'
+  prompt: '[TEST] $',
+  banner: () => 'TEST',
 };

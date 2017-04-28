@@ -5,6 +5,7 @@
     "context": [
       {"name": "bar", "value": 42}
     ],
-    "prompt": "<TEST> $"
+    "prompt": "<TEST> $",
+    "banner": "foo!bar!baz!"
   }
 }
