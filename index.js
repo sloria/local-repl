@@ -20,10 +20,14 @@ const getDefaultPrompt = exports.getDefaultPrompt = (projectName) => {
 };
 
 function printBanner(context, localPkg) {
-  console.log(chalk.gray(`Node ${process.version}`));
-  console.log(chalk.gray(`prepl ${VERSION}`));
-  console.log(chalk.bold(`${localPkg.name} ${localPkg.version}`));
-  console.log('Context: ', _.keys(context).sort().join(', '));
+  console.log(chalk.gray(`Node ${process.version}, prepl ${VERSION}`));
+  console.log(chalk.bold.cyan(`${localPkg.name} ${localPkg.version}`));
+  console.log('Context:', _.keys(context).sort().join(', '));
+}
+
+function contextKey(name) {
+  const isPath = name.indexOf(path.sep);
+  return isPath ? _.camelCase(path.parse(name).name) : name;
 }
 
 const loadContext = exports.loadContext = (contextArray) => {
@@ -31,7 +35,7 @@ const loadContext = exports.loadContext = (contextArray) => {
   _.forEach(contextArray, (item) => {
     // Strings are assumed to be module names
     const isString = _.isString(item);
-    const name = isString ? item : item.name;
+    const name = isString ? contextKey(item) : item.name;
     const module = isString ? item : item.module;
     const value = isString ? null : item.value;
     var contextValue;  // eslint-disable-line

@@ -10,7 +10,9 @@
     "test": "lab"
   },
   "description": "Project-specific REPL configuration for Node.js",
-  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "author": "Steven Loria",
   "license": "MIT",
   "dependencies": {

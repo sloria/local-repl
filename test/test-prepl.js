@@ -52,6 +52,13 @@ describe('loadContext', () => {
     expect(context.lodash).to.be.a.function();
     done();
   });
+
+  it('should camelcase local module names', (done) => {
+    const context = p.loadContext(['./test/local-module']);
+    expect(context).to.include('localModule');
+    expect(context.localModule).to.equal('TEST');
+    done();
+  });
 });
 
 describe('loadConfiguration', () => {
