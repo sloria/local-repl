@@ -34,7 +34,7 @@ const loadContext = exports.loadContext = (contextArray) => {
     const value = isString ? null : item.value;
     var contextValue;  // eslint-disable-line
     if (module && value) {
-      throw new Error('Context entry cannot define both "module" and "value".');
+      throw new Error('ERROR: Context entry cannot define both "module" and "value".');
     }
     if (module) {
       contextValue = reqCwd(module);
@@ -45,6 +45,16 @@ const loadContext = exports.loadContext = (contextArray) => {
   });
   return ret;
 };
+
+function loadContextWithExit(contextArray) {
+  try {
+    return loadContext(contextArray);
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
+  return null;
+}
 
 const loadConfiguration = exports.loadConfiguration = (options) => {
   const pkgPath = options.package || path.join(process.cwd(), 'package.json');
@@ -57,8 +67,8 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
   const replrcContext = _.isArray(replrc) ? replrc : _.get(replrc, 'context', []);
   const context = _.assign(
     {},
-    loadContext(pkgContext),
-    loadContext(replrcContext)
+    loadContextWithExit(pkgContext),
+    loadContextWithExit(replrcContext)
   );
 
   const prompt = options.prompt || replrc.prompt || _.get(localPkg, 'repl.prompt') || getDefaultPrompt(localPkg.name);
@@ -68,6 +78,14 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
   };
 };
 
+
+/**
+ * Starts a new repl.
+ *
+ * Loads configuration from package.json
+ * and .repl.js. Takes the same options as the built-in
+ * `repl.start` function.
+ */
 exports.start = (options) => {
   const opts = options || {};
   const config = loadConfiguration(opts);

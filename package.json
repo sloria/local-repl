@@ -20,7 +20,7 @@
   "repl": {
     "context": [
       { "name": "l", "module": "lodash" },
-      { "name": "foo", "value": 42 }
+      { "name": "prepl", "module": "./" }
     ]
   },
   "devDependencies": {
