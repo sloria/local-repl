@@ -1,0 +1,10 @@
+{
+  "name": "foo",
+  "version": "1.2.3",
+  "repl": {
+    "context": [
+      {"name": "bar", "value": 42}
+    ],
+    "prompt": "<TEST> $"
+  }
+}

@@ -1,0 +1,108 @@
+const path = require('path');
+const expect = require('code').expect;
+const Lab = require('lab');
+const p = require('../');
+
+const lab = exports.lab = Lab.script();
+const describe = lab.describe;
+const it = lab.it;
+
+describe('getDefaultPrompt', () => {
+  it('should use short names', (done) => {
+    expect(p.getDefaultPrompt('foo')).to.equal('[foo] > ');
+    done();
+  });
+
+  it('should truncate long names', (done) => {
+    const name = 'foobarbazquuuux';
+    expect(p.getDefaultPrompt(name)).to.equal('[f] > ');
+    done();
+  });
+});
+
+
+describe('loadContext', () => {
+  it('should load values', (done) => {
+    const context = p.loadContext([{ name: 'foo', value: 42 }]);
+    expect(context).to.equal({ foo: 42 });
+    done();
+  });
+
+  it('should load installed modules', (done) => {
+    const context = p.loadContext([{ name: 'foo', module: 'lodash' }]);
+    expect(context.foo).to.be.a.function();
+    done();
+  });
+
+  it('should load local modules', (done) => {
+    const context = p.loadContext([{ name: 'foo', module: './test/local-module' }]);
+    expect(context.foo).to.equal('TEST');
+    done();
+  });
+
+  it('should throw an error if both module and value passed', (done) => {
+    expect(() => p.loadContext([
+      { name: 'foo', value: 42, module: 'lodash' },
+    ])).to.throw();
+    done();
+  });
+
+  it('should load strings as modules', (done) => {
+    const context = p.loadContext(['lodash']);
+    expect(context.lodash).to.be.a.function();
+    done();
+  });
+});
+
+describe('loadConfiguration', () => {
+  it('should load config from package.json', (done) => {
+    const result = p.loadConfiguration({
+      package: path.join(__dirname, 'pkg.json'),
+      replrc: false,
+    });
+    expect(result.context).to.equal({ bar: 42 });
+    expect(result.prompt).to.equal('<TEST> $');
+    done();
+  });
+
+  it('should allow "repl" config to be an array in package.json', (done) => {
+    const result = p.loadConfiguration({
+      package: path.join(__dirname, 'pkg-with-repl-array.json'),
+      replrc: false,
+    });
+    expect(result.context.bar).to.equal(42);
+    expect(result.context.lodash).to.be.a.function();
+    done();
+  });
+
+  it('should allow "repl" config to be an array in replrc', (done) => {
+    const result = p.loadConfiguration({
+      package: false,
+      replrc: path.join(__dirname, 'replrc-with-array.js'),
+    });
+    expect(result.context.bar).to.equal(43);
+    expect(result.context.lodash).to.be.a.function();
+    done();
+  });
+
+
+  it('should load config from a replrc file', (done) => {
+    const result = p.loadConfiguration({
+      package: false,
+      replrc: path.join(__dirname, 'replrc.js'),
+    });
+    expect(result.context.bar).to.equal(43);
+    expect(result.context.lodash).to.be.a.function();
+    expect(result.prompt).to.equal('[TEST] $');
+    done();
+  });
+
+  it('should give precedence to replrc file', (done) => {
+    const result = p.loadConfiguration({
+      package: path.join(__dirname, 'pkg.json'),
+      replrc: path.join(__dirname, 'replrc.js'),
+    });
+    expect(result.context.bar).to.equal(43);
+    done();
+  });
+});

@@ -1,0 +1,8 @@
+{
+  "name": "foo2",
+  "version": "2.0.0",
+  "repl": [
+    {"name": "bar", "value": 42},
+    "lodash"
+  ]
+}
