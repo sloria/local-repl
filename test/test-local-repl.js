@@ -126,4 +126,15 @@ describe('loadConfiguration', () => {
     expect(banner).to.equal('TEST');
     done();
   });
+
+  it('should allow prompts to be defined as a function', (done) => {
+    const result = p.loadConfiguration({
+      package: path.join(__dirname, 'pkg.json'),
+      replrc: path.join(__dirname, 'replrc-with-prompt-func.js'),
+    });
+    expect(result.context.foo).to.equal('TEST');
+    expect(result.promptFunc).to.be.a.function();
+    expect(result.promptFunc(result.context, result.package)).to.equal('TEST foo > ');
+    done();
+  });
 });

@@ -85,14 +85,17 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
   );
 
   const prompt = options.prompt || replrc.prompt || _.get(localPkg, 'repl.prompt') || getDefaultPrompt(localPkg.name);
+  const promptFunc = _.isString(prompt) ? () => prompt : prompt;
 
   const banner = replrc.banner || _.get(localPkg, 'repl.banner') || printBanner;
   const bannerFunc = _.isString(banner) ? () => console.log(banner) : banner;
   return {
     context,
     prompt,
-    package: localPkg,
+    promptFunc,
+    banner,
     bannerFunc,
+    package: localPkg,
   };
 };
 
@@ -108,7 +111,7 @@ exports.start = (options) => {
   const opts = options || {};
   const config = loadConfiguration(opts);
   const context = config.context;
-  const prompt = config.prompt;
+  const prompt = config.promptFunc(context, config.package);
   config.bannerFunc(context, config.package);
 
   const replOpts = _.assign({}, opts, { prompt });

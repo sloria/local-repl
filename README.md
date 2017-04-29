@@ -117,15 +117,17 @@ module.exports = {
 }
 ```
 
-<!-- You can also define `prompt` as a function in `.replrc.js`: -->
-<!--  -->
-<!-- ```javascript -->
-<!-- module.exports = { -->
-<!--   prompt: (context, pkg) => { -->
-<!--     return `${pkg.name} ${pkg.version} $` -->
-<!--   } -->
-<!-- } -->
-<!-- ``` -->
+You can also define `prompt` as a function in `.replrc.js`:
+
+```javascript
+// .replrc.js
+
+module.exports = {
+  prompt: (context, pkg) => {
+    return `${pkg.name} ${pkg.version} $`
+  }
+}
+```
 
 ### Configuring the banner
 
