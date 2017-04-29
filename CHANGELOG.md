@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1 (unreleased)
+
+* `options.banner` passed to `repl.start` takes precedence over configuration defined in `package.json` or `.replrc.js`.
+
 ## 1.1.0 (2017-04-29)
 
 * Allow `prompt` to be a function that receives `context` and `package`.

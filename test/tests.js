@@ -153,4 +153,16 @@ describe('loadConfiguration', () => {
     expect(result.context.meaningOfLife).to.equal(42);
     done();
   });
+
+  it('should give precedence to passed options', (done) => {
+    const result = p.loadConfiguration({
+      package: path.join(__dirname, 'pkg.json'),
+      replrc: path.join(__dirname, 'replrc.js'),
+      prompt: 'override > ',
+      banner: 'OVERRIDE',
+    });
+    expect(result.prompt).to.equal('override > ');
+    expect(result.banner).to.equal('OVERRIDE');
+    done();
+  });
 });
