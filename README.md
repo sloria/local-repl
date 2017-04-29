@@ -4,7 +4,7 @@
 [![Current Version](https://img.shields.io/npm/v/local-repl.svg)](https://www.npmjs.org/package/local-repl)
 [![Build Status](https://travis-ci.org/sloria/local-repl.svg?branch=master)](https://travis-ci.org/sloria/local-repl)
 
-Project-specific REPLs for Node.js. `local-repl` allows you to automatically import modules and values into your REPL sessions with simple configuration in your project's `package.json` and/or `.reprc.js`.
+Project-specific REPLs for Node.js. `local-repl` allows you to automatically import modules and values into your REPL sessions with simple configuration in your project's `package.json` and/or `.replrc.js`.
 
 
 ## Add local-repl to your project
