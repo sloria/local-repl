@@ -1,25 +1,47 @@
 {
   "name": "local-repl",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Project-specific REPL configuration",
+  "license": "MIT",
+  "repository": "sloria/local-repl",
+  "author": {
+    "name": "Steven Loria",
+    "email": "sloria1@gmail.com",
+    "url": "stevenloria.com"
+  },
   "bin": {
     "local-repl": "cli.js"
+  },
+  "engines": {
+    "node": ">=4"
   },
   "scripts": {
     "lint": "eslint .",
     "repl": "node cli.js",
     "test": "npm run lint && lab"
   },
-  "description": "Project-specific REPL configuration for Node.js",
   "files": [
     "index.js"
   ],
-  "author": "Steven Loria",
-  "license": "MIT",
+  "keywords": [
+    "cli",
+    "repl",
+    "console",
+    "configuration",
+    "shell"
+  ],
   "dependencies": {
     "chalk": "^1.1.3",
     "lodash": "^4.17.4",
     "read-pkg": "^2.0.0",
     "req-cwd": "^1.0.1"
+  },
+  "devDependencies": {
+    "code": "^4.0.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-import": "^2.2.0",
+    "lab": "^13.0.2"
   },
   "repl": [
     {
@@ -30,12 +52,5 @@
       "name": "localRepl",
       "module": "./"
     }
-  ],
-  "devDependencies": {
-    "code": "^4.0.0",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.1.3",
-    "eslint-plugin-import": "^2.2.0",
-    "lab": "^13.0.2"
-  }
+  ]
 }
