@@ -1,6 +1,6 @@
 {
   "name": "local-repl",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Project-specific REPL configuration",
   "license": "MIT",
   "repository": "sloria/local-repl",

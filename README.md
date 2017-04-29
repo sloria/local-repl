@@ -23,7 +23,7 @@ Add the following to `package.json`.
     "repl": "local-repl"
   },
   "devDependencies": {
-    "local-repl": "^1.0.0"
+    "local-repl": "^1.1.0"
   },
   "dependencies": {
     "lodash": "^4.17.4",
