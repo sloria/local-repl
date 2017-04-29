@@ -1,13 +1,13 @@
 {
-  "name": "prepl",
+  "name": "local-repl",
   "version": "0.1.0",
   "bin": {
-    "prepl": "cli.js"
+    "local-repl": "cli.js"
   },
   "scripts": {
     "lint": "eslint .",
     "repl": "node cli.js",
-    "test": "lab"
+    "test": "npm run lint && lab"
   },
   "description": "Project-specific REPL configuration for Node.js",
   "files": [
@@ -27,7 +27,7 @@
       "module": "lodash"
     },
     {
-      "name": "prepl",
+      "name": "localRepl",
       "module": "./"
     }
   ],

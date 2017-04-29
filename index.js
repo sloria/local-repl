@@ -20,7 +20,7 @@ const getDefaultPrompt = exports.getDefaultPrompt = (projectName) => {
 };
 
 function printBanner(context, localPkg) {
-  console.log(chalk.gray(`Node ${process.version}, prepl ${VERSION}`));
+  console.log(chalk.gray(`Node ${process.version}, ${pkg.name} ${VERSION}`));
   console.log(chalk.bold.cyan(`${localPkg.name} ${localPkg.version}`));
   console.log('Context:', _.keys(context).sort().join(', '));
 }
