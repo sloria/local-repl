@@ -35,19 +35,26 @@ const loadContext = exports.loadContext = (contextArray) => {
   _.forEach(contextArray, (item) => {
     // Strings are assumed to be module names
     const isString = _.isString(item);
-    const name = isString ? contextKey(item) : item.name;
+    const name = isString ? item : item.name;
+    if (!name) {
+      throw new Error('ERROR: "name" is required for each context entry.');
+    }
+    const key = contextKey(name);
+    if (!key) {
+      throw new Error(`ERROR: Invalid name "${key}"`);
+    }
     const module = isString ? item : item.module;
     const value = isString ? null : item.value;
     var contextValue;  // eslint-disable-line
     if (module && value) {
-      throw new Error('ERROR: Context entry cannot define both "module" and "value".');
+      throw new Error(`ERROR: Context entry for "${name}" cannot define both "module" and "value".`);
     }
     if (module) {
       contextValue = reqCwd(module);
     } else if (value) {
       contextValue = value;
     }
-    ret[name] = contextValue;
+    ret[key] = contextValue;
   });
   return ret;
 };
@@ -56,7 +63,7 @@ function loadContextWithExit(contextArray) {
   try {
     return loadContext(contextArray);
   } catch (err) {
-    console.error(err.message);
+    console.error(chalk.red(err.message));
     process.exit(1);
   }
   return null;

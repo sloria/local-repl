@@ -59,6 +59,16 @@ describe('loadContext', () => {
     expect(context.localModule).to.equal('TEST');
     done();
   });
+
+  it('should error if name not provided', (done) => {
+    expect(() => p.loadContext([{ value: 42 }])).to.throw();
+    done();
+  });
+
+  it('should not accept ./', (done) => {
+    expect(() => p.loadContext(['./'])).to.throw();
+    done();
+  });
 });
 
 describe('loadConfiguration', () => {
