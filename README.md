@@ -83,7 +83,7 @@ const User = require('./myapp/models/User');
 const me = User.getByEmail.sync('sloria');
 
 module.exports = {
-  'context': [
+  context: [
     'lodash',
     'myapp/utils',
     {name: 'me', value: me},
@@ -92,6 +92,20 @@ module.exports = {
 ```
 
 **Note**: Configuration defined in `.replrc.js` takes precedence over configuration defined in `package.json`.
+
+## Defining context as an object
+
+Context can be defined as an object rather than an array.
+
+```javascript
+module.exports ={
+  context: {
+    l: require('lodash'),
+    utils: require('myapp/utils'),
+    meaningOfLife: 42,
+  }
+}
+```
 
 ## More configuration
 
@@ -111,7 +125,6 @@ In `.replrc.js`:
 
 ```javascript
 // .replrc.js
-
 module.exports = {
   prompt: 'myproject $'
 }
@@ -121,7 +134,6 @@ You can also define `prompt` as a function in `.replrc.js`:
 
 ```javascript
 // .replrc.js
-
 module.exports = {
   prompt: (context, pkg) => {
     return `${pkg.name} ${pkg.version} $`

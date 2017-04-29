@@ -30,33 +30,37 @@ function contextKey(name) {
   return isPath ? _.camelCase(path.parse(name).name) : name;
 }
 
-const loadContext = exports.loadContext = (contextArray) => {
-  const ret = {};
-  _.forEach(contextArray, (item) => {
-    // Strings are assumed to be module names
-    const isString = _.isString(item);
-    const name = isString ? item : item.name;
-    if (!name) {
-      throw new Error('ERROR: "name" is required for each context entry.');
-    }
-    const key = contextKey(name);
-    if (!key) {
-      throw new Error(`ERROR: Invalid name "${key}"`);
-    }
-    const module = isString ? item : item.module;
-    const value = isString ? null : item.value;
-    var contextValue;  // eslint-disable-line
-    if (module && value) {
-      throw new Error(`ERROR: Context entry for "${name}" cannot define both "module" and "value".`);
-    }
-    if (module) {
-      contextValue = reqCwd(module);
-    } else if (value) {
-      contextValue = value;
-    }
-    ret[key] = contextValue;
-  });
-  return ret;
+const loadContext = exports.loadContext = (config) => {
+  if (_.isArray(config)) {
+    const ret = {};
+    _.forEach(config, (item) => {
+      // Strings are assumed to be module names
+      const isString = _.isString(item);
+      const name = isString ? item : item.name;
+      if (!name) {
+        throw new Error('ERROR: "name" is required for each context entry.');
+      }
+      const key = contextKey(name);
+      if (!key) {
+        throw new Error(`ERROR: Invalid name "${key}"`);
+      }
+      const module = isString ? item : item.module;
+      const value = isString ? null : item.value;
+      var contextValue;  // eslint-disable-line
+      if (module && value) {
+        throw new Error(`ERROR: Context entry for "${name}" cannot define both "module" and "value".`);
+      }
+      if (module) {
+        contextValue = reqCwd(module);
+      } else if (value) {
+        contextValue = value;
+      }
+      ret[key] = contextValue;
+    });
+    return ret;
+  }
+  // config is an object: context will be same as input
+  return config;
 };
 
 function loadContextWithExit(contextArray) {

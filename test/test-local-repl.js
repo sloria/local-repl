@@ -69,6 +69,12 @@ describe('loadContext', () => {
     expect(() => p.loadContext(['./'])).to.throw();
     done();
   });
+
+  it('should load key value pairs', (done) => {
+    const context = p.loadContext({ foo: 42 });
+    expect(context).to.equal({ foo: 42 });
+    done();
+  });
 });
 
 describe('loadConfiguration', () => {
@@ -135,6 +141,16 @@ describe('loadConfiguration', () => {
     expect(result.context.foo).to.equal('TEST');
     expect(result.promptFunc).to.be.a.function();
     expect(result.promptFunc(result.context, result.package)).to.equal('TEST foo > ');
+    done();
+  });
+
+  it('should allow context to be an object', (done) => {
+    const result = p.loadConfiguration({
+      package: path.join(__dirname, 'pkg.json'),
+      replrc: path.join(__dirname, 'replrc-with-context-obj.js'),
+    });
+    expect(result.context.l).to.be.a.function();
+    expect(result.context.meaningOfLife).to.equal(42);
     done();
   });
 });
