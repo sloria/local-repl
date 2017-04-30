@@ -43,6 +43,9 @@ const loadContext = exports.loadContext = (config) => {
       }
       const module = isString ? item : item.module;
       const value = isString ? null : item.value;
+      if (!module && !value) {
+        throw new Error('ERROR: Context entry must contain either "module" or "value".');
+      }
       if (module && value) {
         throw new Error(`ERROR: Context entry for "${name}" cannot define both "module" and "value".`);
       }

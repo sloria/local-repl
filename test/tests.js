@@ -47,6 +47,11 @@ describe('loadContext', () => {
     done();
   });
 
+  it('should throw an error if neither module nor value are passed', (done) => {
+    expect((() => p.loadContext([{ name: 'foo' }]))).to.throw();
+    done();
+  });
+
   it('should load strings as modules', (done) => {
     const context = p.loadContext(['lodash']);
     expect(context.lodash).to.be.a.function();
