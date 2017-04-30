@@ -107,7 +107,7 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
  * `repl.start` function.
  */
 exports.start = (options) => {
-  const opts = options || {};
+  const opts = _.isString(options) ? { prompt: options } : options || {};
   const config = loadConfiguration(opts);
   const context = config.context;
   const prompt = config.promptFunc(context, config.package);
