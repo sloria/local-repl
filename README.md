@@ -37,7 +37,7 @@ Add the following to `package.json`.
 ## Run it
 
 ```
-$ npm run repl 
+$ npm run repl
 ```
 
 This will start a REPL session with `lodash` already imported.
@@ -130,7 +130,7 @@ module.exports = {
 }
 ```
 
-You can also define `prompt` as a function in `.replrc.js`:
+You can also define `prompt` as a function in `.replrc.js`. The function will receive the REPL context and the parsed `package.json` object.
 
 ```javascript
 // .replrc.js
@@ -153,7 +153,7 @@ In package.json:
 }
 ```
 
-You can also define `banner` as a fuction in `.replrc.js`. The function will receive the REPL context and the parsed `package.json` object.
+You can also define `banner` as a function in `.replrc.js`. The function will receive the REPL context and the parsed `package.json` object.
 
 ```javascript
 // .replrc.js
@@ -174,6 +174,16 @@ module.exports = {
 ```
 
 ![](media/banner.png)
+
+## Programmatic usage
+
+`local-repl` can be used programatically. The `.start(options)` function takes the same options as Node's built-in [`repl.start(options)`](https://nodejs.org/api/repl.html#repl_repl_start_options).
+
+```javascript
+const repl = require('local-repl');
+
+repl.start({ prompt: '< -_- > ' });
+```
 
 ## Inspiration
 
