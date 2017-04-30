@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.0 (unreleased)
+## 1.2.0 (2017-04-30)
 
 * `options.banner` passed to `repl.start` takes precedence over configuration defined in `package.json` or `.replrc.js`.
 * Fix loading absolute paths into context.
