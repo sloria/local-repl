@@ -166,3 +166,22 @@ describe('loadConfiguration', () => {
     done();
   });
 });
+
+
+describe('contextKey', () => {
+  it('should camelcase local paths with dashes', (done) => {
+    expect(p.contextKey('./utils/foo-bar')).to.equal('fooBar');
+    expect(p.contextKey('/utils/foo-bar')).to.equal('fooBar');
+    done();
+  });
+
+  it('should camelcase snakecase names', (done) => {
+    expect(p.contextKey('./utils/foo_bar')).to.equal('fooBar');
+    done();
+  });
+
+  it('should camelcase package names with dashes', (done) => {
+    expect(p.contextKey('foo-bar')).to.equal('fooBar');
+    done();
+  });
+});

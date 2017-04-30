@@ -25,10 +25,7 @@ function printBanner(context, localPkg) {
   console.log('Context:', _.keys(context).sort().join(', '));
 }
 
-function contextKey(name) {
-  const isPath = name.indexOf(path.sep);
-  return isPath ? _.camelCase(path.parse(name).name) : name;
-}
+const contextKey = exports.contextKey = name => _.camelCase(path.parse(name).name);
 
 const loadContext = exports.loadContext = (config) => {
   if (_.isArray(config)) {
@@ -46,15 +43,10 @@ const loadContext = exports.loadContext = (config) => {
       }
       const module = isString ? item : item.module;
       const value = isString ? null : item.value;
-      var contextValue;  // eslint-disable-line
       if (module && value) {
         throw new Error(`ERROR: Context entry for "${name}" cannot define both "module" and "value".`);
       }
-      if (module) {
-        contextValue = reqCwd(module);
-      } else if (value) {
-        contextValue = value;
-      }
+      const contextValue = module ? reqCwd(module) : value;
       ret[key] = contextValue;
     });
     return ret;

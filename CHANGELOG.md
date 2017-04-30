@@ -3,6 +3,7 @@
 ## 1.1.1 (unreleased)
 
 * `options.banner` passed to `repl.start` takes precedence over configuration defined in `package.json` or `.replrc.js`.
+* Fix loading absolute paths into context.
 
 ## 1.1.0 (2017-04-29)
 
