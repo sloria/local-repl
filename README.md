@@ -23,7 +23,7 @@ Add the following to `package.json`.
     "repl": "local-repl"
   },
   "devDependencies": {
-    "local-repl": "^1.1.0"
+    "local-repl": "^2.0.0"
   },
   "dependencies": {
     "lodash": "^4.17.4",
@@ -80,32 +80,55 @@ In addition to configuration in "package.json", you may optionally define your c
 // .replrc.js
 const User = require('./myapp/models/User');
 
-const me = User.getByEmail.sync('sloria');
-
 module.exports = {
   context: [
     'lodash',
     'myapp/utils',
-    {name: 'me', value: me},
+    {name: 'me', value: User.getByEmail('sloria')},
   ]
 }
 ```
 
 **Note**: Configuration defined in `.replrc.js` takes precedence over configuration defined in `package.json`.
 
+
 ## Defining context as an object
 
 Context can be defined as an object rather than an array.
 
 ```javascript
+// .replrc.js
+const User = require('./myapp/models/User');
+
 module.exports ={
   context: {
     l: require('lodash'),
     utils: require('myapp/utils'),
-    meaningOfLife: 42,
+    me: User.getByEmail('sloria'),
   }
 }
 ```
+
+## Promises as context values
+
+Context values that are promises will be resolved before the REPL starts.
+
+```javascript
+// .replrc.js
+const promise = new Promise((resolve) => {
+  setTimeout(() => {
+    resolve(42);
+  }, 500);
+});
+
+module.exports = {
+  // REPL will have meaningOfLife with value 42 in context
+  context: {
+    meaningOfLife: promise,
+  }
+};
+```
+
 
 ## More configuration
 
@@ -177,7 +200,7 @@ module.exports = {
 
 ## Programmatic usage
 
-`local-repl` can be used programatically. The `.start(options)` function takes the same options as Node's built-in [`repl.start(options)`](https://nodejs.org/api/repl.html#repl_repl_start_options).
+`local-repl` can be used programatically. The `.start(options)` function takes the same options as Node's built-in [`repl.start(options)`](https://nodejs.org/api/repl.html#repl_repl_start_options) and returns a `Promise` that resolves to a `REPLServer` instance.
 
 ```javascript
 const repl = require('local-repl');

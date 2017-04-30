@@ -1,2 +1,6 @@
 #!/usr/bin/env node
-require('./').start();
+const chalk = require('chalk');
+
+require('./').start().catch((message) => {
+  console.error(chalk.red(`ERROR: ${message}`));
+});

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0 (unreleased)
+
+* Allow context values to be `Promise` objects.
+* `start`, `loadConfiguration`, and `loadContext` return promises.
+
 ## 1.2.0 (2017-04-30)
 
 * `options.banner` passed to `repl.start` takes precedence over configuration defined in `package.json` or `.replrc.js`.
