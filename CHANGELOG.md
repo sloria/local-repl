@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 (unreleased)
+## 2.0.0 (2017-04-30)
 
 * Allow context values to be `Promise` objects.
 * `start`, `loadConfiguration`, and `loadContext` return promises.
