@@ -6,7 +6,7 @@ const _ = require('lodash');
 const readPkg = require('read-pkg');
 const reqCwd = require('req-cwd');
 const chalk = require('chalk');
-const isPromise = require('is-promise');
+const pProps = require('p-props');
 
 const pkg = readPkg.sync(path.join(__dirname, 'package.json'));
 const VERSION = exports.VERSION = pkg.version;
@@ -35,7 +35,6 @@ const loadContext = exports.loadContext = (config) => {
       return { name, value };
     });
   const promise = new Promise((resolve, reject) => {
-    const promiseItems = [];
     const ret = {};
     _.forEach(configArray, (item) => {
       // Strings are assumed to be module names
@@ -57,20 +56,10 @@ const loadContext = exports.loadContext = (config) => {
         reject(`Context entry for "${name}" cannot define both "module" and "value".`);
       }
       const contextValue = module ? reqCwd(module) : value;
-      if (isPromise(contextValue)) {
-        promiseItems.push({ key, promise: contextValue });
-      } else {
-        ret[key] = contextValue;
-      }
+      ret[key] = contextValue;
     });
     // Resolve all values that are promises, then resolve the context
-    Promise.all(_.map(promiseItems, each => each.promise))
-      .then((values) => {
-        _.forEach(values, (value, i) => {
-          ret[promiseItems[i].key] = value;
-        });
-        resolve(ret);
-      }, reject);
+    pProps(ret).then(resolve, reject);
   });
   return promise;
 };
