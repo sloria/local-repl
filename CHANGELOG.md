@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1 (unreleased)
+
+* Properly handle rejected promises in context.
+
 ## 2.0.0 (2017-04-30)
 
 * Allow context values to be `Promise` objects.

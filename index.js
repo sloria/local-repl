@@ -70,7 +70,7 @@ const loadContext = exports.loadContext = (config) => {
           ret[promiseItems[i].key] = value;
         });
         resolve(ret);
-      });
+      }, reject);
   });
   return promise;
 };

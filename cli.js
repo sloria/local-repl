@@ -2,5 +2,5 @@
 const chalk = require('chalk');
 
 require('./').start().catch((message) => {
-  console.error(chalk.red(`ERROR: ${message}`));
+  console.error(chalk.red(message));
 });

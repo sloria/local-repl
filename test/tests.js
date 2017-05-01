@@ -116,6 +116,17 @@ describe('loadContext', () => {
         done();
       });
   });
+
+  it('should handle rejected promises', (done) => {
+    const promise = new Promise((resolve, reject) => {
+      reject('ERROR');
+    });
+    p.loadContext({ err: promise })
+      .catch((error) => {
+        expect(error).to.equal('ERROR');
+        done();
+      });
+  });
 });
 
 describe('loadConfiguration', () => {
