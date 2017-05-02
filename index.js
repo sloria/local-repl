@@ -29,39 +29,38 @@ function printBanner(context, localPkg) {
 const contextKey = exports.contextKey = name => _.camelCase(path.parse(name).name);
 
 const loadContext = exports.loadContext = (config) => {
-  const configArray = Array.isArray(config) ?
-    config :
-    _.map(config, (value, name) => {
-      return { name, value };
-    });
-  const promise = new Promise((resolve, reject) => {
-    const ret = {};
-    configArray.forEach((item) => {
-      // Strings are assumed to be module names
-      const isString = typeof item === 'string';
-      const name = isString ? item : item.name;
-      if (!name) {
-        reject('"name" is required for each context entry.');
-      }
-      const key = contextKey(name);
-      if (!key) {
-        reject(`Invalid name "${name}"`);
-      }
-      const module = isString ? item : item.module;
-      const value = isString ? null : item.value;
-      if (!module && !value) {
-        reject('Context entry must contain either "module" or "value".');
-      }
-      if (module && value) {
-        reject(`Context entry for "${name}" cannot define both "module" and "value".`);
-      }
-      const contextValue = module ? reqCwd(module) : value;
-      ret[key] = contextValue;
-    });
-    // Resolve all values that are promises, then resolve the context
-    pProps(ret).then(resolve, reject);
+  return new Promise((resolve, reject) => {
+    if (Array.isArray(config)) {
+      const ret = {};
+      config.forEach((item) => {
+        // Strings are assumed to be module names
+        const isString = typeof item === 'string';
+        const name = isString ? item : item.name;
+        if (!name) {
+          reject('"name" is required for each context entry.');
+        }
+        const key = contextKey(name);
+        if (!key) {
+          reject(`Invalid name "${name}"`);
+        }
+        const module = isString ? item : item.module;
+        const value = isString ? null : item.value;
+        if (!module && !value) {
+          reject('Context entry must contain either "module" or "value".');
+        }
+        if (module && value) {
+          reject(`Context entry for "${name}" cannot define both "module" and "value".`);
+        }
+        const contextValue = module ? reqCwd(module) : value;
+        ret[key] = contextValue;
+      });
+      // Resolve all values that are promises, then resolve the context
+      pProps(ret).then(resolve, reject);
+    } else {
+      // config is an object mapping names to values or promises
+      pProps(config).then(resolve, reject);
+    }
   });
-  return promise;
 };
 
 const loadConfiguration = exports.loadConfiguration = (options) => {
@@ -84,6 +83,7 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
       loadContext(pkgContextConfig),
       loadContext(replrcContextConfig)
     ]).then((contexts) => {
+      // TODO: Use destructuring when targeting Node>=6
       const pkgContext = contexts[0];
       const replrcContext = contexts[1];
       const context = Object.assign({}, pkgContext, replrcContext);
@@ -113,6 +113,7 @@ exports.start = (options) => {
   return new Promise((resolve, reject) => {
     loadConfiguration(opts)
       .then((config) => {
+        // TODO: Use destructuring when targeting Node>=6
         const context = config.context;
         const prompt = config.promptFunc(context, config.package);
         config.bannerFunc(context, config.package);

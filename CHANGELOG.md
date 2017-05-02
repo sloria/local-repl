@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0 (unreleased)
+
+* Internal refactoring.
+
 ## 2.0.1 (2017-04-30)
 
 * Properly handle rejected promises in context.
