@@ -23,22 +23,22 @@ const getDefaultPrompt = exports.getDefaultPrompt = (projectName) => {
 function printBanner(context, localPkg) {
   console.log(chalk.gray(`Node ${process.version}, ${pkg.name} ${VERSION}`));
   console.log(chalk.bold.cyan(`${localPkg.name} ${localPkg.version}`));
-  console.log('Context:', _.keys(context).sort().join(', '));
+  console.log('Context:', Object.keys(context).sort().join(', '));
 }
 
 const contextKey = exports.contextKey = name => _.camelCase(path.parse(name).name);
 
 const loadContext = exports.loadContext = (config) => {
-  const configArray = _.isArray(config) ?
+  const configArray = Array.isArray(config) ?
     config :
     _.map(config, (value, name) => {
       return { name, value };
     });
   const promise = new Promise((resolve, reject) => {
     const ret = {};
-    _.forEach(configArray, (item) => {
+    configArray.forEach((item) => {
       // Strings are assumed to be module names
-      const isString = _.isString(item);
+      const isString = typeof item === 'string';
       const name = isString ? item : item.name;
       if (!name) {
         reject('"name" is required for each context entry.');
@@ -71,13 +71,13 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
   const localPkg = fs.existsSync(pkgPath) && options.package !== false ? readPkg.sync(pkgPath) : {};
   const replrc = fs.existsSync(replrcPath) && options.replrc !== false ? reqCwd(replrcPath) : {};
 
-  const pkgContextConfig = _.isArray(localPkg.repl) ? localPkg.repl : _.get(localPkg, 'repl.context', []);
-  const replrcContextConfig = _.isArray(replrc) ? replrc : _.get(replrc, 'context', []);
+  const pkgContextConfig = Array.isArray(localPkg.repl) ? localPkg.repl : _.get(localPkg, 'repl.context', []);
+  const replrcContextConfig = Array.isArray(replrc) ? replrc : _.get(replrc, 'context', []);
   const prompt = options.prompt || replrc.prompt || _.get(localPkg, 'repl.prompt') || getDefaultPrompt(localPkg.name);
-  const promptFunc = _.isString(prompt) ? () => prompt : prompt;
+  const promptFunc = typeof prompt === 'string' ? () => prompt : prompt;
 
   const banner = options.banner || replrc.banner || _.get(localPkg, 'repl.banner') || printBanner;
-  const bannerFunc = _.isString(banner) ? () => console.log(banner) : banner;
+  const bannerFunc = typeof banner === 'string' ? () => console.log(banner) : banner;
 
   return new Promise((resolve, reject) => {
     Promise.all([
@@ -86,7 +86,7 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
     ]).then((contexts) => {
       const pkgContext = contexts[0];
       const replrcContext = contexts[1];
-      const context = _.assign({}, pkgContext, replrcContext);
+      const context = Object.assign({}, pkgContext, replrcContext);
       resolve({
         context,
         prompt,
@@ -109,7 +109,7 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
  * `repl.start` function.
  */
 exports.start = (options) => {
-  const opts = _.isString(options) ? { prompt: options } : options || {};
+  const opts = typeof options === 'string' ? { prompt: options } : options || {};
   return new Promise((resolve, reject) => {
     loadConfiguration(opts)
       .then((config) => {
@@ -117,9 +117,9 @@ exports.start = (options) => {
         const prompt = config.promptFunc(context, config.package);
         config.bannerFunc(context, config.package);
 
-        const replOpts = _.assign({}, opts, { prompt });
+        const replOpts = Object.assign({}, opts, { prompt });
         const replInstance = repl.start(replOpts);
-        _.assign(replInstance.context, context);
+        Object.assign(replInstance.context, context);
         resolve(replInstance);
       }, reject);
   });
