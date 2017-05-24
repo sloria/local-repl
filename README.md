@@ -1,5 +1,7 @@
 # local-repl
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/sloria/local-repl.svg)](https://greenkeeper.io/)
+
 
 [![Current Version](https://img.shields.io/npm/v/local-repl.svg)](https://www.npmjs.org/package/local-repl)
 [![Build Status](https://travis-ci.org/sloria/local-repl.svg?branch=master)](https://travis-ci.org/sloria/local-repl)
