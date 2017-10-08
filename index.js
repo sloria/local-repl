@@ -114,13 +114,12 @@ exports.start = (options) => {
     loadConfiguration(opts)
       .then((config) => {
         // TODO: Use destructuring when targeting Node>=6
-        const { context, promptFunc, bannerFunc } = config;
-        const prompt = promptFunc(context, config.package);
-        bannerFunc(context, config.package);
+        const prompt = config.promptFunc(config.context, config.package);
+        config.bannerFunc(config.context, config.package);
 
         const replOpts = Object.assign({}, opts, { prompt });
         const replInstance = repl.start(replOpts);
-        Object.assign(replInstance.context, context);
+        Object.assign(replInstance.context, config.context);
         resolve(replInstance);
       }, reject);
   });

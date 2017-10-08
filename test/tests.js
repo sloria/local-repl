@@ -1,10 +1,11 @@
 const path = require('path');
-const { expect } = require('code');
+const expect = require('code').expect;
 const Lab = require('lab');
 const p = require('../');
 
 const lab = exports.lab = Lab.script();
-const { describe, it } = lab;
+const describe = lab.describe;
+const it = lab.it;
 
 describe('getDefaultPrompt', () => {
   it('should use short names', (done) => {
@@ -48,16 +49,16 @@ describe('loadContext', () => {
   it('should throw an error if both module and value passed', (done) => {
     p.loadContext([
       { name: 'foo', value: 42, module: 'lodash' },
-    ]).catch(({ message }) => {
-      expect(message).to.equal('Context entry for "foo" cannot define both "module" and "value".');
+    ]).catch((err) => {
+      expect(err.message).to.equal('Context entry for "foo" cannot define both "module" and "value".');
       done();
     });
   });
 
   it('should throw an error if neither module nor value are passed', (done) => {
     p.loadContext([{ name: 'foo' }])
-      .catch(({ message }) => {
-        expect(message).to.equal('Context entry must contain either "module" or "value".');
+      .catch((err) => {
+        expect(err.message).to.equal('Context entry must contain either "module" or "value".');
         done();
       });
   });
@@ -78,15 +79,15 @@ describe('loadContext', () => {
   });
 
   it('should error if name not provided', (done) => {
-    p.loadContext([{ value: 42 }]).catch(({ message }) => {
-      expect(message).to.equal('"name" is required for each context entry.');
+    p.loadContext([{ value: 42 }]).catch((err) => {
+      expect(err.message).to.equal('"name" is required for each context entry.');
       done();
     });
   });
 
   it('should not accept ./', (done) => {
-    p.loadContext(['./']).catch(({ message }) => {
-      expect(message).to.equal('Invalid name "./"');
+    p.loadContext(['./']).catch((err) => {
+      expect(err.message).to.equal('Invalid name "./"');
       done();
     });
   });
@@ -121,8 +122,8 @@ describe('loadContext', () => {
       reject(new Error('ERROR'));
     });
     p.loadContext({ err: promise })
-      .catch(({ message }) => {
-        expect(message).to.equal('ERROR');
+      .catch((err) => {
+        expect(err.message).to.equal('ERROR');
         done();
       });
   });
