@@ -1,11 +1,10 @@
 const path = require('path');
-const expect = require('code').expect;
+const { expect } = require('code');
 const Lab = require('lab');
 const p = require('../');
 
 const lab = exports.lab = Lab.script();
-const describe = lab.describe;
-const it = lab.it;
+const { describe, it } = lab;
 
 describe('getDefaultPrompt', () => {
   it('should use short names', (done) => {
@@ -49,7 +48,7 @@ describe('loadContext', () => {
   it('should throw an error if both module and value passed', (done) => {
     p.loadContext([
       { name: 'foo', value: 42, module: 'lodash' },
-    ]).catch((message) => {
+    ]).catch(({ message }) => {
       expect(message).to.equal('Context entry for "foo" cannot define both "module" and "value".');
       done();
     });
@@ -57,7 +56,7 @@ describe('loadContext', () => {
 
   it('should throw an error if neither module nor value are passed', (done) => {
     p.loadContext([{ name: 'foo' }])
-      .catch((message) => {
+      .catch(({ message }) => {
         expect(message).to.equal('Context entry must contain either "module" or "value".');
         done();
       });
@@ -79,14 +78,14 @@ describe('loadContext', () => {
   });
 
   it('should error if name not provided', (done) => {
-    p.loadContext([{ value: 42 }]).catch((message) => {
+    p.loadContext([{ value: 42 }]).catch(({ message }) => {
       expect(message).to.equal('"name" is required for each context entry.');
       done();
     });
   });
 
   it('should not accept ./', (done) => {
-    p.loadContext(['./']).catch((message) => {
+    p.loadContext(['./']).catch(({ message }) => {
       expect(message).to.equal('Invalid name "./"');
       done();
     });
@@ -119,11 +118,11 @@ describe('loadContext', () => {
 
   it('should handle rejected promises', (done) => {
     const promise = new Promise((resolve, reject) => {
-      reject('ERROR');
+      reject(new Error('ERROR'));
     });
     p.loadContext({ err: promise })
-      .catch((error) => {
-        expect(error).to.equal('ERROR');
+      .catch(({ message }) => {
+        expect(message).to.equal('ERROR');
         done();
       });
   });

@@ -1,7 +1,9 @@
 # Changelog
 
-## 2.1.0 (unreleased)
+## 3.0.0 (unreleased)
 
+* *Backwards-incompatible*: All promise rejections resolve to an `Error`
+instance rather than a string.
 * Internal refactoring.
 
 ## 2.0.1 (2017-04-30)

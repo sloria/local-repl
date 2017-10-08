@@ -37,19 +37,19 @@ const loadContext = exports.loadContext = (config) => {
         const isString = typeof item === 'string';
         const name = isString ? item : item.name;
         if (!name) {
-          reject('"name" is required for each context entry.');
+          reject(new Error('"name" is required for each context entry.'));
         }
         const key = contextKey(name);
         if (!key) {
-          reject(`Invalid name "${name}"`);
+          reject(new Error(`Invalid name "${name}"`));
         }
         const module = isString ? item : item.module;
         const value = isString ? null : item.value;
         if (!module && !value) {
-          reject('Context entry must contain either "module" or "value".');
+          reject(new Error('Context entry must contain either "module" or "value".'));
         }
         if (module && value) {
-          reject(`Context entry for "${name}" cannot define both "module" and "value".`);
+          reject(new Error(`Context entry for "${name}" cannot define both "module" and "value".`));
         }
         const contextValue = module ? reqCwd(module) : value;
         ret[key] = contextValue;
@@ -114,9 +114,9 @@ exports.start = (options) => {
     loadConfiguration(opts)
       .then((config) => {
         // TODO: Use destructuring when targeting Node>=6
-        const context = config.context;
-        const prompt = config.promptFunc(context, config.package);
-        config.bannerFunc(context, config.package);
+        const { context, promptFunc, bannerFunc } = config;
+        const prompt = promptFunc(context, config.package);
+        bannerFunc(context, config.package);
 
         const replOpts = Object.assign({}, opts, { prompt });
         const replInstance = repl.start(replOpts);
