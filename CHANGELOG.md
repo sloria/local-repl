@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.0.0 (unreleased)
+## 3.0.0 (2017-10-08)
 
 * *Backwards-incompatible*: All promise rejections resolve to an `Error`
 instance rather than a string.
