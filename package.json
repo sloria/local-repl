@@ -42,7 +42,7 @@
     "eslint": "^4.5.0",
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0",
-    "lab": "^14.0.1"
+    "lab": "^15.0.0"
   },
   "repl": [
     {
