@@ -38,7 +38,7 @@
     "req-cwd": "^2.0.0"
   },
   "devDependencies": {
-    "code": "^4.0.0",
+    "code": "^5.1.2",
     "eslint": "^4.5.0",
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0",
