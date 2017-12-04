@@ -4,18 +4,18 @@ node_js:
 - '6'
 - '4'
 sudo: false
-# Let greenkeeper update lockfile
-before_install:
-- npm install -g npm
-- npm install -g greenkeeper-lockfile@1
-before_script: greenkeeper-lockfile-update
-after_script: greenkeeper-lockfile-upload
 # Release to NPM when tags are pushed
-deploy:
-  provider: npm
-  email: sloria1@gmail.com
-  api_key:
-    secure: eojhG5i5OuP2V0PRhWI5H6FUN4PzNSo6Bd5JUMf2xIlA5iCpdZXuEwFjRNUM368pLK5UXfFaqrVUz9/PIORr8lrC9pO0p9lcJRnleSE6VVx+61ReQazc0aTvXpTUv9+jmrbIrqzGKjTB8CdekVPQH+kjTPS/VkLJl8StPshQmF3ps081m7zqzIam5D8G490YjjNotio7VuV3p6Oj4yfJW/ylTedLZmAHIyMLWTJ2JAgrFw1sXPmp4DL6goUbGDbbG5K4Aysor0LRKL7B/18N3IjfwPuAMscdCDvn9Ioyjp87CbPRD/p3oArR/a3XI4/BiHMacwQJwoHlFu6oV4Jh7ZOjuBXrW07f8NH9FekZEszsTIW6TZyLNWKPyOy/nflkMi1tzCzSj8J9Rw8flJjPs1bdFtj5hAzkq1WKHffDAiwm2o6uhlfpNj9mCygb4COLvB+u0pCiJdlfp21hMr9iXKEPZ2DJCNuydMPy4nvC1MtZJU4HVHBykHuhOEGIAdHyI4NZ9WL5gg3qHv2XGM3278KpZ9jtaS2QnTb3eO+lAq44wph2o08pmU7756DrPiaGfjBD4oFZAbTM6c2wJMYnU6U4jQc121fjVoPYGL651ohCn7yIewJmdI8t9YGZt97m52gn4xKTz3rrMypYG6mqnO4uvEvvqaE6Sc7U5Adx0Bs=
-  on:
-    tags: true
-    repo: sloria/local-repl
+jobs:
+  include:
+  - stage: npm release
+    if: tag IS present
+    node_js: "8"
+    script: echo "Deploying to npm ..."
+    deploy:
+      provider: npm
+      email: sloria1@gmail.com
+      api_key:
+        secure: eojhG5i5OuP2V0PRhWI5H6FUN4PzNSo6Bd5JUMf2xIlA5iCpdZXuEwFjRNUM368pLK5UXfFaqrVUz9/PIORr8lrC9pO0p9lcJRnleSE6VVx+61ReQazc0aTvXpTUv9+jmrbIrqzGKjTB8CdekVPQH+kjTPS/VkLJl8StPshQmF3ps081m7zqzIam5D8G490YjjNotio7VuV3p6Oj4yfJW/ylTedLZmAHIyMLWTJ2JAgrFw1sXPmp4DL6goUbGDbbG5K4Aysor0LRKL7B/18N3IjfwPuAMscdCDvn9Ioyjp87CbPRD/p3oArR/a3XI4/BiHMacwQJwoHlFu6oV4Jh7ZOjuBXrW07f8NH9FekZEszsTIW6TZyLNWKPyOy/nflkMi1tzCzSj8J9Rw8flJjPs1bdFtj5hAzkq1WKHffDAiwm2o6uhlfpNj9mCygb4COLvB+u0pCiJdlfp21hMr9iXKEPZ2DJCNuydMPy4nvC1MtZJU4HVHBykHuhOEGIAdHyI4NZ9WL5gg3qHv2XGM3278KpZ9jtaS2QnTb3eO+lAq44wph2o08pmU7756DrPiaGfjBD4oFZAbTM6c2wJMYnU6U4jQc121fjVoPYGL651ohCn7yIewJmdI8t9YGZt97m52gn4xKTz3rrMypYG6mqnO4uvEvvqaE6Sc7U5Adx0Bs=
+      on:
+        tags: true
+        repo: sloria/local-repl
