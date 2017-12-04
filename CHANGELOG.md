@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1 (2017-12-04)
+
+* Fix installation.
+
 ## 3.0.0 (2017-10-08)
 
 * *Backwards-incompatible*: All promise rejections resolve to an `Error`
