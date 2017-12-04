@@ -21,7 +21,8 @@
     "test": "npm run lint && lab"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "cli.js"
   ],
   "keywords": [
     "cli",
