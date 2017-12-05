@@ -4,5 +4,5 @@ module.exports = {
   context: {
     l: lodash,
     meaningOfLife: 42,
-  }
+  },
 };

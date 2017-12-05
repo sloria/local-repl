@@ -1,4 +1,1 @@
-module.exports = [
-  { name: 'bar', value: 43 },
-  'lodash',
-];
+module.exports = [{name: 'bar', value: 43}, 'lodash'];
