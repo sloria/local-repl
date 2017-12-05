@@ -81,7 +81,7 @@ Local modules can be imported, too.
 
 ## Using `.replrc.js`
 
-In addition to configuration in "package.json", you may optionally define your configuration in a `.replrc.js` file. This is useful if you want to dynamically compute modules and values for your REPLs..
+Instead of defining configuration in "package.json", you may define your configuration in a `.replrc.js` file. This is useful if you want to dynamically compute modules and values for your REPLs.
 
 ```js
 // .replrc.js
