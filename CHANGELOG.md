@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.0 (2017-12-04)
+
+* Use `await` in REPLs without having to wrap your code in `async`
+functions. Just set `enableAwait: true` in your config.
+
 ## 3.0.1 (2017-12-04)
 
 * Fix installation.
