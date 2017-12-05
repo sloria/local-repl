@@ -1,10 +1,16 @@
-# local-repl
+# 🐚 local-repl
 
 [![Current Version](https://img.shields.io/npm/v/local-repl.svg)](https://www.npmjs.org/package/local-repl)
 [![Build Status](https://travis-ci.org/sloria/local-repl.svg?branch=master)](https://travis-ci.org/sloria/local-repl)
 [![Greenkeeper badge](https://badges.greenkeeper.io/sloria/local-repl.svg)](https://greenkeeper.io/)
 
 Project-specific REPLs for Node.js. `local-repl` allows you to automatically import modules and values into your REPL sessions with simple configuration in your project's `package.json` and/or `.replrc.js`.
+
+## Features!
+
+- Automatically import modules into your REPL sessions
+- Use `await` in the REPL without having to wrap your code in async functions
+- Configure the banner and prompt
 
 
 ## Add local-repl to your project
@@ -15,7 +21,8 @@ $ npm install local-repl --save-dev
 $ yarn add local-repl --dev
 ```
 
-Add the following to `package.json`.
+Add the following to `package.json`. Note: lodash is used as an example
+here; it is not required to use local-repl.
 
 ```json
 {
@@ -129,6 +136,32 @@ module.exports = {
 };
 ```
 
+## await support
+
+You can use `await` in your REPL sessions without having to
+create `async` functions.
+
+![](media/await.gif)
+
+Just add the following to your package.json:
+
+```json
+{
+  "repl": {
+    "enableAwait": true
+  }
+}
+```
+
+Or in `.replrc.js`
+
+```js
+// .replrc.js
+module.exports = {
+  enableAwait: true
+}
+
+```
 
 ## More configuration
 
@@ -217,4 +250,4 @@ repl.start({ prompt: '< -_- > ' });
 
 ## License
 
-MIT licenses. See [LICENSE](https://github.com/sloria/local-repl/blob/master/LICENSE) for more details.
+MIT licensed. See [LICENSE](https://github.com/sloria/local-repl/blob/master/LICENSE) for more details.

@@ -7,6 +7,7 @@ const readPkg = require('read-pkg');
 const reqCwd = require('req-cwd');
 const chalk = require('chalk');
 const pProps = require('p-props');
+const { addAwaitOutsideToReplServer } = require('await-outside');
 
 const pkg = readPkg.sync(path.join(__dirname, 'package.json'));
 const VERSION = exports.VERSION = pkg.version;
@@ -78,6 +79,8 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
   const banner = options.banner || replrc.banner || _.get(localPkg, 'repl.banner') || printBanner;
   const bannerFunc = typeof banner === 'string' ? () => console.log(banner) : banner;
 
+  const enableAwait = options.enableAwait || replrc.enableAwait || _.get(localPkg, 'repl.enableAwait', false);
+
   return new Promise((resolve, reject) => {
     Promise.all([
       loadContext(pkgContextConfig),
@@ -93,6 +96,7 @@ const loadConfiguration = exports.loadConfiguration = (options) => {
         promptFunc,
         banner,
         bannerFunc,
+        enableAwait,
         package: localPkg,
       });
     }, reject);
@@ -120,6 +124,9 @@ exports.start = (options) => {
         const replOpts = Object.assign({}, opts, { prompt });
         const replInstance = repl.start(replOpts);
         Object.assign(replInstance.context, config.context);
+        if (config.enableAwait) {
+          addAwaitOutsideToReplServer(replInstance);
+        }
         resolve(replInstance);
       }, reject);
   });

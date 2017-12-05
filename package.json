@@ -1,6 +1,6 @@
 {
   "name": "local-repl",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Project-specific REPL configuration",
   "license": "MIT",
   "repository": "sloria/local-repl",
@@ -33,6 +33,7 @@
     "shell"
   ],
   "dependencies": {
+    "await-outside": "^2.1.2",
     "chalk": "^2.0.0",
     "lodash": "^4.17.4",
     "p-props": "^1.0.0",
@@ -47,14 +48,17 @@
     "lab": "^14.0.1",
     "np": "^2.18.1"
   },
-  "repl": [
-    {
-      "name": "l",
-      "module": "lodash"
-    },
-    {
-      "name": "localRepl",
-      "module": "./"
-    }
-  ]
+  "repl": {
+    "context": [
+      {
+        "name": "l",
+        "module": "lodash"
+      },
+      {
+        "name": "localRepl",
+        "module": "./"
+      }
+    ],
+    "enableAwait": true
+  }
 }
