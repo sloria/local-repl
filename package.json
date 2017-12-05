@@ -18,7 +18,8 @@
   "scripts": {
     "lint": "eslint .",
     "repl": "node cli.js",
-    "test": "npm run lint && lab"
+    "test": "npm run lint && lab",
+    "release": "np --no-publish"
   },
   "files": [
     "index.js",
@@ -43,7 +44,8 @@
     "eslint": "^4.5.0",
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0",
-    "lab": "^14.0.1"
+    "lab": "^14.0.1",
+    "np": "^2.18.1"
   },
   "repl": [
     {
