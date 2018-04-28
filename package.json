@@ -18,7 +18,7 @@
   "scripts": {
     "lint": "xo",
     "repl": "node cli.js",
-    "test": "npm run lint && lab",
+    "test": "npm run lint && ava test/tests.js",
     "release": "np --no-publish"
   },
   "files": [
@@ -41,8 +41,7 @@
     "req-cwd": "^2.0.0"
   },
   "devDependencies": {
-    "code": "^4.0.0",
-    "lab": "^14.0.1",
+    "ava": "^0.25.0",
     "np": "^2.18.1",
     "xo": "^0.20.3"
   },
