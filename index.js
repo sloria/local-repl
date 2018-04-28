@@ -126,10 +126,7 @@ const loadConfiguration = (exports.loadConfiguration = options => {
     Promise.all([
       loadContext(pkgContextConfig),
       loadContext(replrcContextConfig),
-    ]).then(contexts => {
-      // TODO: Use destructuring when targeting Node>=6
-      const pkgContext = contexts[0];
-      const replrcContext = contexts[1];
+    ]).then(([pkgContext, replrcContext]) => {
       const context = Object.assign({}, pkgContext, replrcContext);
       resolve({
         context,
@@ -155,15 +152,16 @@ const loadConfiguration = (exports.loadConfiguration = options => {
 exports.start = options => {
   const opts = typeof options === 'string' ? {prompt: options} : options || {};
   return new Promise((resolve, reject) => {
-    loadConfiguration(opts).then(config => {
-      // TODO: Use destructuring when targeting Node>=6
-      const prompt = config.promptFunc(config.context, config.package);
-      config.bannerFunc(config.context, config.package);
+    loadConfiguration(
+      opts
+    ).then(({context, package: pkg, promptFunc, bannerFunc, enableAwait}) => {
+      const prompt = promptFunc(context, pkg);
+      bannerFunc(context, pkg);
 
       const replOpts = Object.assign({}, opts, {prompt});
       const replInstance = repl.start(replOpts);
-      Object.assign(replInstance.context, config.context);
-      if (config.enableAwait && awaitOutside) {
+      Object.assign(replInstance.context, context);
+      if (enableAwait && awaitOutside) {
         awaitOutside(replInstance);
       }
       resolve(replInstance);

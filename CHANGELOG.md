@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.0 (unreleased)
+
+* Drop support for Node.js 4.
+
 ## 3.1.0 (2017-12-04)
 
 * Use `await` in REPLs without having to wrap your code in `async`
