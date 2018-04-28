@@ -1,7 +1,7 @@
 const path = require('path');
 const expect = require('code').expect;
 const Lab = require('lab');
-const p = require('../');
+const p = require('..');
 
 const lab = (exports.lab = Lab.script());
 const describe = lab.describe;
