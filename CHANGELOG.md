@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.0.0 (unreleased)
+## 4.0.0 (2018-05-06)
 
 * Drop support for Node.js 4.
 
