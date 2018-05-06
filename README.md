@@ -33,10 +33,10 @@ here; it is not required to use local-repl.
     "local-repl": "^3.0.0"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.4"
   },
   "repl": [
-    "lodash",
+    "lodash"
   ]
 }
 ```
