@@ -8,13 +8,7 @@ const readPkg = require('read-pkg');
 const reqCwd = require('req-cwd');
 const chalk = require('chalk');
 const pProps = require('p-props');
-
-let awaitOutside;
-try {
-  awaitOutside = require('await-outside').addAwaitOutsideToReplServer;
-} catch (err) {
-  awaitOutside = null;
-}
+const {addAwaitOutsideToReplServer} = require('await-outside');
 
 const pkg = readPkg.sync(path.join(__dirname, 'package.json'));
 const VERSION = (exports.VERSION = pkg.version);
@@ -161,8 +155,8 @@ exports.start = options => {
       const replOpts = Object.assign({}, opts, {prompt});
       const replInstance = repl.start(replOpts);
       Object.assign(replInstance.context, context);
-      if (enableAwait && awaitOutside) {
-        awaitOutside(replInstance);
+      if (enableAwait) {
+        addAwaitOutsideToReplServer(replInstance);
       }
       resolve(replInstance);
     }, reject);
