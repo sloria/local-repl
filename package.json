@@ -43,7 +43,7 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "np": "^2.18.1",
-    "xo": "^0.20.3"
+    "xo": "^0.21.0"
   },
   "repl": {
     "context": [

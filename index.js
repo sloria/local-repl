@@ -142,6 +142,9 @@ const loadConfiguration = (exports.loadConfiguration = options => {
  * Loads configuration from package.json
  * and .repl.js. Takes the same options as the built-in
  * `repl.start` function.
+ *
+ * @param {object} options: Same options as repl.start.
+ * @returns {Promise} A promise to a repl server instance.
  */
 exports.start = options => {
   const opts = typeof options === 'string' ? {prompt: options} : options || {};
