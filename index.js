@@ -140,7 +140,7 @@ const loadConfiguration = (exports.loadConfiguration = options => {
  * instance.
  *
  * Loads configuration from package.json
- * and .repl.js. Takes the same options as the built-in
+ * and .replrc.js. Takes the same options as the built-in
  * `repl.start` function.
  *
  * @param {object} options: Same options as repl.start.
