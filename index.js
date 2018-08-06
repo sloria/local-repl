@@ -4,13 +4,13 @@ const path = require('path');
 const process = require('process');
 const repl = require('repl');
 const _ = require('lodash');
-const readPkg = require('read-pkg');
+const parseJSON = require('parse-json');
 const reqCwd = require('req-cwd');
 const chalk = require('chalk');
 const pProps = require('p-props');
 const {addAwaitOutsideToReplServer} = require('await-outside');
 
-const pkg = readPkg.sync(path.join(__dirname, 'package.json'));
+const pkg = parseJSON(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8'));
 const VERSION = (exports.VERSION = pkg.version);
 
 const getDefaultPrompt = (exports.getDefaultPrompt = projectName => {
@@ -83,7 +83,7 @@ const loadConfiguration = (exports.loadConfiguration = options => {
 
   const localPkg =
     fs.existsSync(pkgPath) && options.package !== false
-      ? readPkg.sync(pkgPath)
+      ? parseJSON(fs.readFileSync(pkgPath, 'utf8'))
       : {};
   const replrc =
     fs.existsSync(replrcPath) && options.replrc !== false
