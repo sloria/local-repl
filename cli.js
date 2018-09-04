@@ -3,6 +3,6 @@ const chalk = require('chalk');
 
 require('.')
   .start()
-  .catch(err => {
-    console.error(chalk.red(err));
+  .catch(error => {
+    console.error(chalk.red(error));
   });
