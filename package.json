@@ -38,7 +38,7 @@
     "lodash": "^4.17.4",
     "p-props": "^1.0.0",
     "parse-json": "^4.0.0",
-    "req-cwd": "^2.0.0"
+    "req-cwd": "^3.0.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",
